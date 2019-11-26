@@ -29,4 +29,4 @@ def choice_question_count(request):
     """
     获得选择题的数量
     """
-    return Response(ChoiceQuestion.objects.count())
+    return Response({'count': ChoiceQuestion.objects.count()})
