@@ -1,4 +1,4 @@
-<script type="text/javascript" src='vue.js'></script>
+<script crossorigin="anonymous" integrity="sha384-8t+aLluUVnn5SPPG/NbeZCH6TWIvaXIm/gDbutRvtEeElzxxWaZN+G/ZIEdI/f+y" src="https://lib.baomitu.com/vue/2.6.10/vue.min.js"></script>
 <!-- 引入样式 -->
 <link rel="stylesheet" href="https://unpkg.com/element-ui@2.3.7/lib/theme-chalk/index.css">
 <!-- 引入组件库 -->
@@ -179,7 +179,7 @@
         	nextQuestion: function() {
         		random = this.generateRandomNum(1)
         		axios
-			      .get('http://121.199.64.120/choice-question/' + random)
+			      .get('http://121.199.64.120:8080/choice-question/' + random)
 			      .then(response => (
 			      	this.content = response.data.content,
 			      	this.option_a = response.data.option_a,
