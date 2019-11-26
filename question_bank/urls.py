@@ -22,10 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('', include('questions.urls', namespace='questions')),
-    path('category/<int:pk>',
+    path('category/<int:pk>/',
          CategoryViewSet.as_view({'get': 'retrieve', 'delete': 'destroy', 'post': 'update'}),
          name='category-detail'),
-    path('choice-question/<int:pk>',
+    path('choice-question/<int:pk>/',
          ChoiceQuestionViewSet.as_view({'get': 'retrieve', 'delete': 'destroy', 'put': 'update'}),
          name='choicequestion-detail'),
 ]

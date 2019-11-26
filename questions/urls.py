@@ -10,5 +10,5 @@ router.register(r'choice-questions', ChoiceQuestionViewSet)
 app_name = 'questions'
 urlpatterns = [
     path('', include(router.urls)),
-    path('choice-question-count', choice_question_count)
+    path('choice-question-count/', choice_question_count)
 ]
