@@ -1,0 +1,203 @@
+<script type="text/javascript" src='vue.js'></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui@2.3.7/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script crossorigin="anonymous" integrity="sha384-0Wybf/jbixFZriVZUt+8SIrFVEWxKPCJyRIFTHzJj787D/y56WqEU8zsyGDB8j9h" src="https://lib.baomitu.com/element-ui/2.12.0/index.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.19.0/axios.min.js"></script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style type="text/css">
+		.el-row {
+			margin-bottom: 20px;
+			&:last-child {
+			  margin-bottom: 0;
+			}
+		}
+		.el-col {
+			border-radius: 4px;
+		}
+		.grid-content {
+			border-radius: 4px;
+			min-height: 36px;
+		}
+		.row-bg {
+			padding: 10px 0;
+			background-color: #f9fafc;
+		}
+		.text {
+			font-size: 14px;
+		}
+
+		.item {
+			margin-bottom: 18px;
+		}
+
+		.clearfix:before,
+		.clearfix:after {
+			display: table;
+			content: "";
+		}
+		.clearfix:after {
+			clear: both
+		}
+
+		.box-card {
+			width: 90%;
+			height: 80%;
+			margin: 0 auto;
+		}
+		.basic-layout {
+			text-align: center;
+			margin-top: 30px;
+		}
+		.title {
+			font-size: 20px;
+		}
+		.question {
+			margin-bottom: 25px; 
+			font-size: 20px;
+		}
+		.choice {
+			width: 100%;
+		}
+		.rate {
+			margin-top: 60px;
+			/*margin-bottom: 0px;*/
+		}
+    </style>
+</head>
+<body>
+	<div id="app" class="basic-layout">
+		<el-card class="box-card">
+			<div slot="header" class="clearfix">
+				<span class="title"><strong>题目</strong></span>
+				<el-button style="float: right; padding: 3px 0" type="text" @click="nextQuestion()">换一题</el-button>
+			</div>
+			<div class="text item">
+				<p class="question">{{ content }}</p>
+				<el-row :gutter="50">
+				  <el-col :span="12"><div class="grid-content">
+				  	<el-button @click="showChoice('A');dialogVisible = true" class="choice">
+						A. {{ option_a }}	
+					</el-button>
+				  </div></el-col>
+				  <el-col :span="12"><div class="grid-content">
+				  	<el-button @click="showChoice('B');dialogVisible = true" class="choice">
+						B. {{ option_b }}
+					</el-button>
+				  </div></el-col>
+				</el-row>
+				<el-row :gutter="50">
+				  <el-col :span="12"><div class="grid-content">
+				  	<el-button @click="showChoice('C');dialogVisible = true" class="choice">
+						C. {{ option_c }}
+					</el-button>
+				  </div></el-col>
+				  <el-col :span="12"><div class="grid-content">
+				  	<el-button @click="showChoice('D');dialogVisible = true" class="choice">
+						D. {{ option_d }}
+					</el-button>
+				  </div></el-col>
+				</el-row>
+
+				<el-dialog
+				  title="结果"
+				  :visible.sync="dialogVisible"
+				  width="30%">
+				  <span>{{ result }}</span><br />
+				  <span>{{ resolution }}</span>
+				  <span slot="footer" class="dialog-footer">
+				    <el-button @click="dialogVisible = false">再看看题目</el-button>
+				    <el-button type="primary" @click="nextQuestion();dialogVisible = false">下一题</el-button>
+				  </span>
+				</el-dialog>
+
+				<div class="rate">
+					<p>帮本题评个分吧</p>
+					<el-rate
+						v-model="value"
+						show-text>
+					</el-rate>
+				</div>
+			</div>
+		</el-card>
+  </div>
+</body>
+<script>
+	var vm = new Vue({
+		el: '#app',
+		data() {
+            return {
+                dialogVisible: false,
+                loading: false,
+                errored: false,
+                content: '我是问题',
+                option_a: '我是A选项',
+                option_b: '我是B选项',
+                option_c: '我是C选项',
+                option_d: '我是D选项',
+                result: '',
+                answer:'A',
+                resolution: '暂无解析',
+                value: null
+            }
+        },
+        methods: {
+        	showChoice: function(option) {
+        		const h = this.$createElement;
+        		switch(option) {
+        			case this.answer:
+        				this.result = '恭喜你回答正确！'
+        				break;
+        			case 'A':
+        				this.result = '回答错误'
+        				break;
+        			case 'B':
+        				this.result = '回答错误'
+        				break;
+        			case 'C':
+        				this.result = '回答错误'
+        				break;
+        			case 'D':
+        				this.result = '回答错误'
+        				break;
+        		}
+        	},
+        	generateRandomNum: function(min, max) {
+        		switch(arguments.length){ 
+			        case 1: 
+			            return parseInt(Math.random()*min+1,10); 
+			        	break; 
+			        case 2: 
+			            return parseInt(Math.random()*(max-min+1)+min,10); 
+			        	break; 
+			            default: 
+			                return 0; 
+			            	break; 
+			    } 
+        	},
+        	nextQuestion: function() {
+        		random = this.generateRandomNum(1)
+        		axios
+			      .get('http://121.199.64.120/choice-question/' + random)
+			      .then(response => (
+			      	this.content = response.data.content,
+			      	this.option_a = response.data.option_a,
+			      	this.option_b = response.data.option_b,
+			      	this.option_c = response.data.option_c,
+			      	this.option_d = response.data.option_d,
+			      	this.answer = response.data.answer,
+			      	this.resolution = response.data.solution == ''?'暂无解析':response.data.solution
+			      	))
+			      .catch(error => {
+			        console.log(error)
+			        this.errored = true
+			      })
+			      .finally(() => this.loading = false)
+        	}
+        },
+        mounted() {
+        	this.nextQuestion()
+        }
+	})
+</script>
