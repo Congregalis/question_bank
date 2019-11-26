@@ -62,7 +62,6 @@
 		}
 		.rate {
 			margin-top: 60px;
-			/*margin-bottom: 0px;*/
 		}
     </style>
 </head>
@@ -139,7 +138,8 @@
                 result: '',
                 answer:'A',
                 resolution: '暂无解析',
-                value: null
+                value: 0,
+				count: 0
             }
         },
         methods: {
@@ -176,8 +176,13 @@
 			            	break; 
 			    } 
         	},
-        	nextQuestion: function() {
-        		random = this.generateRandomNum(1)
+        	nextQuestion: async function() {
+        		await axios
+						  .get('http://121.199.64.120/choice-question-count')
+						  .then(response => (
+							this.count = response.data.count
+						  ))
+        		random = this.generateRandomNum(this.count)
         		axios
 			      .get('http://121.199.64.120/choice-question/' + random)
 			      .then(response => (
