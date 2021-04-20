@@ -180,13 +180,13 @@
         	},
         	nextQuestion: async function() {
         		await axios
-						  .get('http://121.199.64.120/choice-question-count')
+						  .get('http://localhost:8000/choice-question-count')
 						  .then(response => (
 							this.count = response.data.count
 						  ))
         		random = this.generateRandomNum(this.count)
         		axios
-			      .get('http://121.199.64.120/choice-question/' + random)
+			      .get('http://localhost:8000/choice-question/' + random)
 			      .then(response => (
 			      	this.content = response.data.content,
 			      	this.option_a = response.data.option_a,

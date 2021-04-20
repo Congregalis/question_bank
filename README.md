@@ -25,20 +25,24 @@ api: http://121.199.64.120/
 ```python
 from django.contrib.auth.models import User
 User.objects.create_superuser(username='admin', password='123', email='no@no,com')
+exit()
 ```
 
 然后开启后台服务
 
 `python manage.py runserver` 
 
-默认开启在8000端口，当然也可以自己指定端口
+默认开启在8000端口，当然也可以自己指定端口，此时访问 localhost:8000 即可浏览后台管理的api文档（可直接操作），使用刚刚新建的用户登录就可以新建问题了
 
-访问localhost:8000即可浏览后台管理的api文档（可直接操作）
-
-使用刚刚新建的用户登录就可以新建问题了
-
+前端页面由vue编写，直接打开项目根目录下的html文件即可浏览（当然，数据库里需要有你新建的问题）
 
 ## 技术栈
+- django
+- vue
 
 ## TODO
 (欢迎小伙伴来一起完善)
+- [x] 后台权限
+- [ ] 根据不同的类型获取问题
+- [ ] 完善问题的评级系统
+- [ ] 答案解析支持代码高亮
