@@ -1,9 +1,8 @@
 # Question_bank
-（因为买的服务器到期已经用不了了，想看demo的话可以自己clone下来根据下面的步骤进行搭建）
 
-demo:  http://121.199.64.120:8080/
+demo:  http://101.35.202.174/qbank
 
-api: http://121.199.64.120/
+api: http://101.35.202.174:8000/
 
 ## 搭建步骤
 首先自己创建一个python虚拟环境，然后安装requirement.txt下的包
