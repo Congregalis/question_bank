@@ -1,8 +1,16 @@
 # Question_bank
 
+Question_bank 是一个自定义的随机做题题库，目前仅支持选择题。前端采用 vue 单文件，后端基于django，可通过 django 的 api 很方便的在浏览器上添加题目并在前端页面上随机做题。
+
 demo:  http://101.35.202.174/qbank
 
 api: http://101.35.202.174:8000/
+
+## 截图
+
+![](/images/screenshot1.png)
+![](/images/screenshot2.png)
+![](/images/screenshot3.png)
 
 ## 搭建步骤
 首先自己创建一个python虚拟环境，然后安装requirement.txt下的包
